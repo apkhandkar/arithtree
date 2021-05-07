@@ -1,0 +1,21 @@
+Enables traversing and modifying an AExpr tree.
+Initialising an AEZipper with an AExpr-like type will work, however traversal and modification
+functions work only on AExpr trees.
+Traversal and modification functions may return a Snag in case of incorrect traversal (e.g. if one tries to zip down
+when there is nothing to go down, or when one goes beyond 'end' of the tree)
+Snags are carried forward, i.e. if a zipping function is passed a Snag it returns a Snag.
+
+Why is there no library function to unwrap from an AEZipper?
+The AEZipper adds context to the AExpr type that allows the AExpr tree to be 'traversed' and modified like
+imperative programming languages would allow.
+This context supports the possibility of failure to traverse which may occur if one tries to traverse in a 
+direction that cannot be traversed from the current point of focus. The failure is represented by a Snag type.
+The result of a succesful traversal is represented by a Zipper type that is essentially a tuple that comprises
+of the part of the AExpr tree that is in focus, and the rest of the tree. The Snag and Zipper types are not
+inherent to the AExpr trees themselves and thus once added they cannot be removed empirically.
+
+Crumb 
+
+A Crumb is a wrapper around an AExpr with some additional context.
+The context is not determined by the AExpr that the Crumb wraps around but by another AExpr.
+Hence it cannot be considered amenable to implementing as an applicative functor. 
